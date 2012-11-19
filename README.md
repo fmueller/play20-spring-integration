@@ -7,10 +7,12 @@ I saw [this demo](https://github.com/guillaumebort/play20-spring-demo) of Guilla
 
 If you like XML files you can also try this module: [play-2.0-spring-module](https://github.com/wsargent/play-2.0-spring-module). I'm a fanboy of annotation-based configuration. So, I don't use this module. But it inspired my solution a lot.
 
+**The goal is to autowire our controllers.**
+
 ## How does it work?
-The goal is to autowire our controllers.
+
 ### Add spring dependencies
-First of all you have to add the spring dependency to your project by configuring `project/Build.scala` file.
+First of all, you have to add the spring dependency to your project by configuring `project/Build.scala` file.
 
 ```scala
 import sbt._
@@ -32,6 +34,8 @@ object ApplicationBuild extends Build {
 ```
 
 ### Bootstrap the application context
+
+To initiate a spring application context on the start of a play application you have to implement a `Global` object as shown below.
 
 ```java
 package global;
@@ -60,6 +64,8 @@ public class Global extends GlobalSettings {
 }
 ```
 
+Through the `getBean` method we will later autowire our controllers. It is only a delegating method.
+
 ### Set up your Spring configuration
 
 In this example the configuration is done via annotations. You could also use XML files.
@@ -82,11 +88,11 @@ public class SpringConfiguration {
     }
 }
 ```
-It demonstrate two points: component scanning for `controllers` and `services` package and the usage of explicit bean definition by `@Bean` annotation. All controllers and services are being automatically discovered if they are annotated as a component and autowired.
+It demonstrate two points: component scanning for `controllers` and `services` package and the usage of explicit bean definition by `@Bean` annotation. All controllers and services are being automatically discovered and autowired if they are annotated as a component.
 
 ### Add some services
 
-For this example we have two really important services. The first one is a POJO with the most famous functionality in the developer world: hello world. :-)
+For this example we have two _really important_ services. The first one is a POJO with the most famous functionality in the developer world: hello world. :-)
 
 ```java
 package services;
@@ -97,10 +103,9 @@ public class HelloWorldService {
         return "hello";
     }
 }
-
 ```
 
-The second one is annotated as a component to show that component scanning works.
+The second one is annotated as a component to show that component scanning works and gets the first service injected.
 
 
 ```java
@@ -141,14 +146,14 @@ public final class ControllerFactory {
 }
 ```
 
-With little trick you get autowired controllers. The `routes` file contains the new route:
+For each controller you write such a static getter method. By calling the `getBean` method you force the autowiring of the controller. With this nifty trick you get autowired controllers. The `routes` file contains the new route:
 
 ```scala
 GET     /                           controllers.ControllerFactory.application.index()
 GET     /personalized/:name         controllers.ControllerFactory.application.helloTo(name: String)
 ```
 
-And the `Application`controller is not static anymore. So, it can be autowired.
+And the `Application`controller is not static anymore and is annotated as a component. So, it can be autowired.
 
 ```java
 package controllers;
