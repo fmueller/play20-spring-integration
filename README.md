@@ -1,7 +1,7 @@
 play20-spring-integration
 =========================
 
-**Small project that shows how to easily integrate spring into play 2.0.x application.**
+**Small project that shows how to easily integrate spring into play 2.0.x applications.**
 
 I saw [this demo](https://github.com/guillaumebort/play20-spring-demo) of Guillaume Bort on how to combine spring and play 2. The name of this repository suggests that is does work with play 2.0.x but it only works with play 2.1 because _managed controller classes instantiation_ is only available on play 2.1 branch. So, I show you how to integrate spring into your play 2.0.x application.
 
@@ -88,7 +88,7 @@ public class SpringConfiguration {
     }
 }
 ```
-It demonstrate two points: component scanning for `controllers` and `services` package and the usage of explicit bean definition by `@Bean` annotation. All controllers and services are being automatically discovered and autowired if they are annotated as a component.
+It demonstrates two points: component scanning for `controllers` and `services` package and the usage of explicit bean definition by `@Bean` annotation. All controllers and services are being automatically discovered and autowired if they are annotated as a component.
 
 ### Add some services
 
@@ -146,14 +146,14 @@ public final class ControllerFactory {
 }
 ```
 
-For each controller you write such a static getter method. By calling the `getBean` method you force the autowiring of the controller. With this nifty trick you get autowired controllers. The `routes` file contains the new route:
+For each controller you write such a static getter method. By calling the `getBean` method you force the autowiring of the controller. With this nifty trick you get autowired controllers. The `routes` file contains the new routes:
 
 ```scala
 GET     /                           controllers.ControllerFactory.application.index()
 GET     /personalized/:name         controllers.ControllerFactory.application.helloTo(name: String)
 ```
 
-And the `Application`controller is not static anymore and is annotated as a component. So, it can be autowired.
+The `Application`controller is not static anymore and is annotated as a component. So, it can be autowired.
 
 ```java
 package controllers;
