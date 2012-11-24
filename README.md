@@ -3,7 +3,7 @@ play20-spring-integration
 
 **Small project that shows how to easily integrate spring into play 2.0.x applications.**
 
-I saw [this demo](https://github.com/guillaumebort/play20-spring-demo) of Guillaume Bort on how to combine spring and play 2. The name of this repository suggests that is does work with play 2.0.x but it only works with play 2.1 because _managed controller classes instantiation_ is only available on play 2.1 branch. So, I show you how to integrate spring into your play 2.0.x application.
+I saw [this demo](https://github.com/guillaumebort/play20-spring-demo) by Guillaume Bort on how to combine spring and play 2. The name of this repository suggests that is does work with play 2.0.x but it only works with play 2.1 because _managed controller classes instantiation_ is only available on play 2.1 branch. So, I show you how to integrate spring into your play 2.0.x application.
 
 If you like XML files you can also try this module: [play-2.0-spring-module](https://github.com/wsargent/play-2.0-spring-module). I'm a fanboy of annotation-based configuration. So, I don't use this module. But it inspired my solution a lot.
 
